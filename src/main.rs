@@ -1,4 +1,7 @@
+mod player;
+
 use bevy::prelude::*;
+use player::PlayerPlugin;
 
 #[derive(States, Debug, Clone, PartialEq, Eq, Hash, Default)]
 enum GameState {
@@ -11,17 +14,11 @@ enum GameState {
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
+        .add_plugins(PlayerPlugin)
         .init_state::<GameState>()
         .add_systems(Startup, setup_camera)
         .add_systems(Update, menu_input.run_if(in_state(GameState::Menu)))
-        .add_systems(OnEnter(GameState::Playing), setup_game)
         .run();
-
-
-}
-
-fn setup_game(mut commands: Commands, asset_server: Res<AssetServer>) {
-    commands.spawn(Sprite::from_image(asset_server.load("test.png")));
 }
 
 fn menu_input(mut next_state: ResMut<NextState<GameState>>, keyboard: Res<ButtonInput<KeyCode>>) {
@@ -29,7 +26,6 @@ fn menu_input(mut next_state: ResMut<NextState<GameState>>, keyboard: Res<Button
         println!("Switching state to Playing");
         next_state.set(GameState::Playing);
     }
-
 }
 
 fn setup_camera(mut commands: Commands) {
