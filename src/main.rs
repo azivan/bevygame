@@ -1,5 +1,9 @@
+mod enemy;
 mod player;
+mod projectile;
 
+use crate::enemy::EnemyPlugin;
+use crate::projectile::ProjectilePlugin;
 use bevy::prelude::*;
 use player::PlayerPlugin;
 
@@ -15,6 +19,8 @@ fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
         .add_plugins(PlayerPlugin)
+        .add_plugins(ProjectilePlugin)
+        .add_plugins(EnemyPlugin)
         .init_state::<GameState>()
         .add_systems(Startup, setup_camera)
         .add_systems(Update, menu_input.run_if(in_state(GameState::Menu)))

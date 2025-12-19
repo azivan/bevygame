@@ -17,7 +17,7 @@ pub struct Player {
 
 fn spawn_player(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
-        Sprite::from_image(asset_server.load("test.png")),
+        Sprite::from_image(asset_server.load("player.png")),
         Transform::from_xyz(0.0, -200.0, 0.0),
         Player { speed: 500.0 },
     ));
